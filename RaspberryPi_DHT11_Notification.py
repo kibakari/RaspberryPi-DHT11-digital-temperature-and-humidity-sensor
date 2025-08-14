@@ -36,9 +36,9 @@ try:
 					print("Humidity%d: %-3.1f %%" % (sensor_num+1, result[sensor_num].humidity))
 					print(retry_conunter)
 					break
-				elif retry_conunter >= 49:
-					print("cannot get the sensor data")
 				else:
+					if retry_conunter >= 49:
+						print("could not get the sensor data")
 					retry_conunter += 1
 			if sensor_num == 0:
 				output_data ={'key':'%d Temp: %-3.1f \u2103 \n%d Humid: %-3.1f %%\n' % (sensor_num+1, result[sensor_num].temperature, sensor_num+1, result[sensor_num].humidity)}
@@ -46,7 +46,7 @@ try:
 				output_data['key'] += '%d Temp: %-3.1f \u2103 \n%d Humid: %-3.1f %%\n' % (sensor_num+1, result[sensor_num].temperature, sensor_num+1, result[sensor_num].humidity)
 		response = requests.post(Webhook_url,json=output_data)
 		print(response.text)
-		time.sleep(30)
+		time.sleep(300)
 
 
 except KeyboardInterrupt:
